@@ -1,0 +1,12 @@
+{
+	"name": "Mosh_DiceRoller",
+	"slug": "mosh-diceroller",
+	"author": "Elfenspalter",
+	"description": "A simple Dice Roller for the Mothership RPG",
+	"copyrightNotice": "MOTHERSHIP® is a registered trademark of Tuesday Knight Games. All rights reserved. For additional information, visit www.tuesdayknightgames.com or contact contact@tuesdayknightgames.com.\nMoSh-DiceRoller by Elfenspalter for Sales \u0026 Dungeons",
+	"passEntriesToJS": false,
+	"config": [],
+	"images": {},
+	"dataSources": [],
+	"version": ""
+}

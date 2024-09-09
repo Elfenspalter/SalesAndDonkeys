@@ -1,0 +1,58 @@
+<link href="https://cdn.spalter.li/elfie_main.css" rel="stylesheet">
+<script src="https://cdn.spalter.li/elfie_main.js"></script>
+
+<body>
+  <div id="heading">
+    <center><h1>MoSh Dices</h1></center>
+  </div>
+
+  <br>
+
+  <table>
+    <tr>
+      <th style="width: 33%;">1W20</th>
+      <th style="width: 33%;">1W100</th>
+      <th style="width: 33%;">1w5</th>
+    </tr>
+    <tr>
+      <td><span id="1w20">36</span></td>
+      <td><span id="1w100">36</span></td>
+      <td><span id="1w5">36</span></td>
+    </tr>
+  </table>
+
+  <br>
+
+  <table>
+    <tr>
+      <th style="width: 25%;">1W10</th>
+      <th style="width: 25%;">2W10</th>
+      <th style="width: 25%;">3W10</th>
+      <th style="width: 25%;">4W10</th>
+    </tr>
+    <tr>
+      <td><span id="1w10">36</span></td>
+      <td><span id="2w10">36</span></td>
+      <td><span id="3w10">36</span></td>
+      <td><span id="4w10">36</span></td>
+    </tr>
+  </table>
+
+  <br>
+
+  <small>powered by Elfenspalter and Sales & Dungeons<br>{{ config.seed }}</small>
+
+  <br><br>
+
+</body>
+
+<script>
+  // OutputsTheIDs
+  document.getElementById("1w10").textContent = dice.roll('1d10').total;
+  document.getElementById("2w10").textContent = dice.roll('2d10').total;
+  document.getElementById("3w10").textContent = dice.roll('3d10').total;
+  document.getElementById("4w10").textContent = dice.roll('4d10').total;
+  document.getElementById("1w100").textContent = dice.roll('1d100').total;
+  document.getElementById("1w20").textContent = dice.roll('1d20').total;
+  document.getElementById("1w5").textContent = dice.roll('1d5').total;
+</script>
