@@ -1,0 +1,12 @@
+{
+	"name": "Random Names",
+	"slug": "random-names",
+	"author": "Elfenspalter",
+	"description": "Generates random names for characters. It uses names from the US and Spain.",
+	"copyrightNotice": "",
+	"passEntriesToJS": false,
+	"config": [],
+	"images": {},
+	"dataSources": [],
+	"version": ""
+}

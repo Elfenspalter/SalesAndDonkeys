@@ -1,0 +1,73 @@
+<link href="https://cdn.spalter.li/elfie_main.css" rel="stylesheet">
+<script src="https://cdn.spalter.li/elfie_main.js"></script>
+<script src="https://cdn.spalter.li/elfie_charnames.js"></script>
+
+<body>
+  <div id="heading">
+    <center><h1>Random Names</h1></center>
+  </div>
+
+  <br>
+
+  <table>
+    <tr>
+      <th style="width: 33%;">M</th>
+      <th style="width: 33%;">F</th>
+      <th style="width: 33%;">Namen</th>
+    </tr>
+    <tr>
+      <td class="centered" id="nameM1"></td>
+      <td class="centered" id="nameF1"></td>
+      <td class="centered" id="lastName1"></td>
+    </tr>
+    <tr>
+      <td class="centered" id="nameM2"></td>
+      <td class="centered" id="nameF2"></td>
+      <td class="centered" id="lastName2"></td>
+    </tr>
+    <tr>
+      <td class="centered" id="nameM3"></td>
+      <td class="centered" id="nameF3"></td>
+      <td class="centered" id="lastName3"></td>
+    </tr>
+    <tr>
+      <td class="centered" id="nameM4"></td>
+      <td class="centered" id="nameF4"></td>
+      <td class="centered" id="lastName4"></td>
+    </tr>
+    <tr>
+      <td class="centered" id="nameM5"></td>
+      <td class="centered" id="nameF5"></td>
+      <td class="centered" id="lastName5"></td>
+    </tr>
+  </table>
+
+  <br>
+
+  <small>powered by Elfenspalter and Sales & Dungeons<br>{{ config.seed }}</small>
+
+  <br><br>
+
+  <script>
+    // Populate table with random names
+    document.getElementById("nameM1").textContent = getRandomItem(maleNames);
+    document.getElementById("nameF1").textContent = getRandomItem(femaleNames);
+    document.getElementById("lastName1").textContent = getRandomItem(lastNames);
+
+    document.getElementById("nameM2").textContent = getRandomItem(maleNames);
+    document.getElementById("nameF2").textContent = getRandomItem(femaleNames);
+    document.getElementById("lastName2").textContent = getRandomItem(lastNames);
+
+    document.getElementById("nameM3").textContent = getRandomItem(maleNames);
+    document.getElementById("nameF3").textContent = getRandomItem(femaleNames);
+    document.getElementById("lastName3").textContent = getRandomItem(lastNames);
+
+    document.getElementById("nameM4").textContent = getRandomItem(maleNames);
+    document.getElementById("nameF4").textContent = getRandomItem(femaleNames);
+    document.getElementById("lastName4").textContent = getRandomItem(lastNames);
+
+    document.getElementById("nameM5").textContent = getRandomItem(maleNames);
+    document.getElementById("nameF5").textContent = getRandomItem(femaleNames);
+    document.getElementById("lastName5").textContent = getRandomItem(lastNames);
+  </script>
+</body>
