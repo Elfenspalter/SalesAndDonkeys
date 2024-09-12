@@ -1,0 +1,27 @@
+{
+	"name": "Spacestation",
+	"slug": "elfie-spacestation",
+	"author": "Elfenspalter",
+	"description": "Generiert eine Weltraumstation mit NPCs, einem Plothook und Anomalien.",
+	"copyrightNotice": "",
+	"passEntriesToJS": false,
+	"config": [
+		{
+			"key": "ai",
+			"name": "AI Inhalte",
+			"description": "AI generierte Inhalte erlauben?",
+			"type": "Checkbox",
+			"default": true
+		},
+		{
+			"key": "gmview",
+			"name": "GM VIEW",
+			"description": "Alle Inhalte anzeigen",
+			"type": "Checkbox",
+			"default": true
+		}
+	],
+	"images": {},
+	"dataSources": [],
+	"version": ""
+}

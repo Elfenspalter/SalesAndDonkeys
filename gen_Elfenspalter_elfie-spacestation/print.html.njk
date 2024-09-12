@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Module Generator</title>
+  <link href="https://cdn.spalter.li/elfie_main.css" rel="stylesheet">
+  <style>
+    table {
+      width: 100%;
+      border: 1px solid black;
+      margin-bottom: 20px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid black;
+    }
+    .tbltext {
+      width: 100%;
+    }
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<center><h1><span id="title">Titel</span></h1></center>
+
+{% if config.ai and config.gmview %}
+  <br>
+    <table>
+      <tr>
+        <th style="width: 100%;">Lore</th>
+      </tr>
+      <tr>
+        <td class="tbltext"><span id="lore"></span></td>
+      </tr>
+    </table>
+    <br>
+    <table>
+      <tr>
+        <th style="width: 100%; text-align: center;">//--- SECRET ---//</th>
+      </tr>
+      <tr>
+        <td class="tbltext"><span id="secret"></span></td>
+      </tr>
+          <tr>
+        <th style="width: 100%; text-align: center;">//--- SECRET ---//</th>
+      </tr>
+    </table>
+{% endif %}
+
+<center><h2>- MAP -</h2></center>
+
+<div id="map"></div>
+
+<br>
+
+<small>powered by Elfenspalter and Sales & Dungeons<br>{{ config.seed }}</small>
+
+<script src="https://cdn.spalter.li/elfie_main.js"></script>
+<script src="https://cdn.spalter.li/elfie_mapgen.js"></script>
+<script src="https://cdn.spalter.li/elfie_stationgen.js"></script>
+<script src="https://cdn.spalter.li/elfie_aitools.js"></script>
+<script src="https://cdn.spalter.li/elfie_charnames.js"></script>
+
+<script>
+  // Stations-Titel generieren
+  document.getElementById("title").textContent = title;
+
+  // Station Geschichte generieren
+if ({{ config.ai }} && {{ config.gmview }}) {
+    lore = aiPrompt(primer, promptBuilder("Du bist ein Autor für Horror und Sci-Fi Geschichten. Denke dir einen kurzen Text aus, der die Geschichte der Weltraumstation " + title + "beschreibt. Schreibe wer die Station gebaut hat, wann und was ihr ursprünglicher und jetztiger Zweck ist / war. Schreibe, wer aktuell die Station unter Kontrolle hat.",50));
+    primer += "Schreibe für folgende Weltraumstation: " + lore;
+    document.getElementById("lore").textContent = lore;
+    secret = aiPrompt(primer, promptBuilder("Du bist ein Autor für Horror und Sci-Fi Geschichten. Denke dir ein Geheimnis, ein Twist aus, dass nur der Spielleiter wissen darf und die Spieler erst im Laufe des Spiels entdecken.",50));
+    primer += "Das Geheimnis der Weltraumstation, dass nur der Spielleiter weiss: " + secret;
+    document.getElementById("secret").textContent = secret;
+}
+
+  // Render function to generate the tables based on the array
+  function renderMap(generatedModules) {
+    const mapContainer = document.getElementById("map");
+
+    generatedModules.forEach(module => {
+      const table = document.createElement("table");
+      
+      // Module title row (no bold)
+      const titleRow = document.createElement("tr");
+      const titleCell = document.createElement("th");
+      titleCell.innerHTML = `[${module.number}] ${module.name}`;
+      titleCell.style.width = "100%";
+      titleRow.appendChild(titleCell);
+      table.appendChild(titleRow);
+      
+      // Module description row
+      const descRow = document.createElement("tr");
+      const descCell = document.createElement("td");
+      descCell.classList.add("tbltext");
+      if ({{ config.ai }}) {
+        description = aiPrompt(primer, promptBuilder("Denke dir eine kurze beschreibung wie das Modul aussieht, riecht und was die spieler sehen können aus und beschreibe kurz, wozu das modul da ist, für ein " + module.name + " Modul auf einer Weltraumstation. Das Modul wird eingesetzt für: " + module.description + ". Erwähne nicht den Namen dieses Moduls im Text.",20));
+        description = removeQuotes(description);
+        primer += "Beschreibung des Moduls " + module.name + " auf dieser Weltraumstation: " + description;
+      } else {
+        description = module.description;
+      }
+      descCell.innerHTML = description;
+      descRow.appendChild(descCell);
+      table.appendChild(descRow);
+
+      // If there is an NPC, add the NPC row
+      if (module.hasNPC && {{ config.gmview }}) {
+        const npcRow = document.createElement("tr");
+        const npcCell = document.createElement("td");
+        npcCell.classList.add("tbltext");
+        if ({{ config.ai }}) {
+          npc = aiPrompt(primer, promptBuilder("Du bist ein Autor für Horror und Sci-Fi Geschichten. Denke dir einen neuen, spannenden, mysteriösen NPC aus der sich im " + module.name + " Modul auf einer Weltraumstation aufhält. Der Name des NPC ist: " + getRandomFullName(),20));
+          primer += "Auf der Station befindet sich " + npc + " im " + module.name + " Modul";
+        } else {
+          npc = "NPC: " + getRandomFullName();
+        }
+        npcCell.innerHTML = "<b>NPC:</b> " + npc;
+        npcRow.appendChild(npcCell);
+        table.appendChild(npcRow);
+      }
+
+      // If there is an anomaly, add the anomaly row
+      if (module.hasAnomaly && {{ config.gmview }}) {
+        if ({{ config.ai }}) {
+          ano = aiPrompt(primer, promptBuilder("Du bist ein Autor für Horror und Sci-Fi Geschichten. Denke dir eine Anomalie, eine gefahrensituation oder ein random Encounter mit einer person oder einem Monster aus, der im " + module.name + " Modul stattfindet, wenn die Spieler das Modul betreten. Es muss gefährlich, unheimlich und brutal sein.",25));
+          primer += "Im " + module.name + " Modul passiert folgendes: " + ano;
+        } else {
+          ano = getRandomItem(anomalien);
+        }
+        const anomalyRow = document.createElement("tr");
+        const anomalyCell = document.createElement("td");
+        anomalyCell.classList.add("tbltext");
+        anomalyCell.innerHTML = "<b>Spezial:</b> " + ano;
+        anomalyRow.appendChild(anomalyCell);
+        table.appendChild(anomalyRow);
+      }
+
+      // Module connections row (only the number part in bold)
+      const connRow = document.createElement("tr");
+      const connCell = document.createElement("td");
+      connCell.classList.add("tbltext");
+      module.connections.forEach(num => {
+        const connectedModule = generatedModules.find(m => m.number === num);
+        const boldPart = document.createElement("span");
+        boldPart.classList.add("bold");
+        boldPart.innerHTML = `[${num}] `;
+        connCell.appendChild(boldPart);
+        connCell.appendChild(document.createTextNode(`${connectedModule.name} `));
+      });
+      connRow.appendChild(connCell);
+      table.appendChild(connRow);
+
+      mapContainer.appendChild(table);
+    });
+  }
+
+  const generatedMap = generateMapArray(modules);
+  renderMap(generatedMap);
+</script>
+
+</body>
+</html>
