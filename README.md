@@ -1,11 +1,14 @@
 # SalesAndDonkeys
-Generators, templates and datasources from Elfenspalter.
+System agnostic generators, templates and datasources from Elfenspalter for the "Sales & Dungeons"-Software.
 
 ## Generators
-
-### MoSh Dice Roller
-Simple Diceroller for the Mothership RPG. Includes all possible rolls on one print.
 
 ### Random Names
 Generates sets of random names.  
 Name sources: US, Spain (more to come...)
+
+### Spacestation Generator (German)
+Generates a random spacestation with NPCs, abstract map, descriptions and a secret.
+OPTIONS:
+* AI Inhalte: Should AI generate better descriptions and more texts? (AI need to be enabled and set-up in settings)
+* GM View: Should the generator show all information or just the player facing stuff? (like when the players find a map or hack into a temrinal to see what is where...)
