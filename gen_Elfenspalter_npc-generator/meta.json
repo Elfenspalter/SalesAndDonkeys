@@ -1,0 +1,34 @@
+{
+	"name": "NPC Generator",
+	"slug": "npc-generator",
+	"author": "Elfenspalter",
+	"description": "Dies ist ein einfacher NPC Generator für Horror Sci-Fi Geschichten.",
+	"copyrightNotice": "",
+	"passEntriesToJS": false,
+	"config": [
+		{
+			"key": "ai",
+			"name": "KI Inhalte",
+			"description": "Benutze KI um NPC zu generieren?",
+			"type": "Checkbox",
+			"default": true
+		},
+		{
+			"key": "gender",
+			"name": "Geschlecht",
+			"description": "Welches Geschlecht soll der NPC haben?",
+			"type": "Options",
+			"default": {
+				"choices": [
+					"zufall",
+					"mann",
+					"frau"
+				],
+				"selected": "zufall"
+			}
+		}
+	],
+	"images": {},
+	"dataSources": [],
+	"version": ""
+}

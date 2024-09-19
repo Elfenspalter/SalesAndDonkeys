@@ -1,0 +1,98 @@
+<link href="https://cdn.spalter.li/elfie_main.css" rel="stylesheet">
+<script src="https://cdn.spalter.li/elfie_main.js"></script>
+<script src="https://cdn.spalter.li/elfie_charnames.js"></script>
+<script src="https://cdn.spalter.li/elfie_jobs.js"></script>
+<script src="https://cdn.spalter.li/elfie_aitools.js"></script>
+<script src="https://cdn.spalter.li/elfie_secrets.js"></script>
+
+<body>
+  <div id="heading">
+    <center><h1><span id="name">Name</span></h1></center>
+  </div>
+
+  <br>
+
+  <table>
+    <tr>
+      <th style="width: 100%;">Personendaten</th>
+    </tr>
+    <tr>
+      <td class="tbltext">
+        <b>Rufname:</b> "<span id="nick">Fox</span>"<br>
+        <b>Alter:</b> <span id="age">73</span><br>
+        <b>Beruf:</b> <span id="job">Arbeiter:in</span><br>
+        <b>Zivilstand:</b> <span id="zivil">/\</span><br>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+
+  <span id="ai"></span>
+
+  <span id="secret"></span>
+
+  <br>
+
+  <small>powered by Elfenspalter and Sales & Dungeons<br>{{ config.seed }}</small>
+
+  <br><br>
+
+</body>
+
+<script>
+  // Select Gender
+  gender = "{{ config.gender.selected }}";
+  if (gender == "mann") {
+    gender = 1;
+  } else if (gender == "frau") {
+    gender = 2;
+  } else {
+    gender = 0;
+  }
+  // Generate a random Name
+  let name = getRandomFullName(gender, true);
+  // Select random Job
+  if (name.gender == "male") {
+    job = getRandomItem(jobsM);
+  } else {
+    job = getRandomItem(jobsF);
+  }
+  // Generate Age
+  age = dice.roll('2d20+20').total
+  // Generate Random Nickname
+  nick = getRandomItem(nicks);
+  // Zivilstand
+  rand = random();
+  if (rand <= 0.5) {
+    zivil = "Ledig";
+  } else if (rand <= 0.6) {
+    zivil = "Verwitwet";
+  } else {
+    zivil = "Verheiratet";
+  }
+  // Dunkles Geheimnis
+  secret = getRandomItem(secrets);
+  // AI Stuff
+  const ai = {{ config.ai }};
+  if (ai) {
+    // Generate Backstory
+    lore = aiPrompt(primer, promptBuilder("Du bist ein Horror und Sci-Fi Autor für Tischrollenspiele. Schreibe eine kurze Biografie für " + name.fullName + ", Spitzname " + nick + ", " + age + " Jahre alt und von Beruf " + job,40));
+    primer += lore;
+    aicontent = `<table> <tr> <th style="width: 100%;">Backstory</th> </tr> <tr> <td class="tbltext">${lore}</td> </tr> </table><br>`;
+    // Generate Secret
+    sec = aiPrompt(primer, promptBuilder("Du bist ein Horror und Sci-Fi Autor für Tischrollenspiele. Denke dir für " + name.fullName + " ein düsteres Geheimnis aus, dass nur die Spielleitung kennt. Sei brutal und erbarmungslos. Beschreibe dabei folgendes: " + secret + " ",40));
+    seccontent = `<table> <tr> <th style="width: 100%;">Geheimnis</th> </tr> <tr> <td class="tbltext">${sec}</td> </tr> </table>`;
+    document.getElementById("ai").innerHTML = aicontent;
+  } else {
+    seccontent = `<table> <tr> <th style="width: 100%;">Geheimnis</th> </tr> <tr> <td class="tbltext">${secret}</td> </tr> </table>`;
+  }
+  // OutputsTheIDs
+  document.getElementById("name").textContent = name.fullName;
+  document.getElementById("age").textContent = age;
+  document.getElementById("job").textContent = job;
+  document.getElementById("nick").textContent = nick;
+  document.getElementById("zivil").textContent = zivil;
+  document.getElementById("secret").innerHTML = seccontent;
+  console.log(secret);
+</script>
